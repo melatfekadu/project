@@ -1,10 +1,17 @@
+/* eslint-disable */
+const express = require('express');
+const bodyParser = require('body-parser');
 const UserSchema = require('../models/User.js');
+const router = express.Router();
 module.exports.controller = (app) => {
+      app.get('/users',(req,res)=>{
+       res.json({ message: 'API Initialized!'});
+       
+   });    
  // add a new user
  app.post('/users', (req, res) => {
  const newUser = new UserSchema({
-    full_name: req.body.full_name,
-    bp_number: req.body.bp_number,
+    name : req.body.full_name,
     email: req.body.email,
     password: req.body.password
  });
