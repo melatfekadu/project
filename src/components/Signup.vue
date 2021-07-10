@@ -1,4 +1,5 @@
 /* eslint-disable */
+eslint-disable
 <template>
     <div class="vue-tempalte">
         <nav class="navbar shadow bg-dark rounded justify-content-between flex-nowrap flex-row fixed-top">
@@ -53,9 +54,43 @@
 </template>
 <script>
 export default {
-  name: 'Signup',
-  data () {
-    return {}
-  }
-}
+ data: () => ({
+   valid: true,
+   username: '',
+   password: '',
+   nameRules: [
+      v => !!v || 'username and password is needed',
+   ],
+   select: null,
+ }),
+ methods: {
+   submit() {
+      if (this.$refs.form.validate()) {
+        return axios({
+           method: 'post',
+           data: {
+               username: this.username,
+               password: this.username,
+           },
+           url: 'http://localhost:8081/Signup',
+           headers: {
+             'Content-Type': 'application/json',
+           },
+         })
+           .then(() => {
+              this.$router.push({ name: 'ComplaintPage' });
+              this.$refs.form.reset();
+           })
+           .catch(() => {
+           });
+        }
+        return true;
+       },
+       clear() {
+          this.$refs.form.reset();
+      },
+    },
+};
+
+ 
 </script>

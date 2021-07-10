@@ -24,19 +24,17 @@
 
                   <div class="form-group">
                       <label>User Name</label>
-                      <input type="text" class="form-control form-control-lg" />
+                      <input type="text" class="form-control form-control-lg" v-model="username"
+/>
                   </div>
-                  <div class="form-group">
-                      <label>BP Number</label>
-                      <input type="text" class="form-control form-control-lg"/>
-                  </div>
-
                   <div class="form-group">
                       <label>Password</label>
-                      <input type="password" class="form-control form-control-lg" />
+                      <input type="password" class="form-control form-control-lg" v-model="password"
+/>
                   </div>
                   <router-link to="/ComplaintPage">
-                  <button type="submit" class="btn btn-dark btn-lg btn-block">
+                  <button v-on:click="submit" class="btn btn-dark btn-lg btn-block" >
+                     
                     Sign in
                   </button></router-link>
 
@@ -58,12 +56,45 @@
 </template>
 
 <script>
+import axios from 'axios';
 export default {
-  name: 'Login',
-  data () {
-    return {}
-  }
-}
+ data: () => ({
+   valid: true,
+   username: '',
+   password: '',
+   
+   
+ }),
+ methods: {
+   submit() {
+      if (this.$refs.form.validate()) {
+        return axios({
+           method: 'post',
+           data: {
+               username: this.username,
+               password: this.username,
+           },
+           url: 'http://localhost:3000/users',
+           headers: {
+             'Content-Type': 'application/json',
+           },
+         })
+           .then(() => {
+              this.$router.push({ name: 'ComplaintPage' });
+             // this.$refs.form.reset();
+           })
+           .catch(() => {
+           });
+        }
+        return true;
+       },
+     //  clear() {
+         // this.$refs.form.reset();
+      //},
+    },
+};
+
+ 
 </script>
 <style scoped>
 
